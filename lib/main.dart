@@ -16,9 +16,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Container(
         decoration:const BoxDecoration(
-            image:  DecorationImage(
-              image: AssetImage("assets/background.jpg"),
-              fit: BoxFit.cover,)
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(0.8, 1),
+            colors: <Color>[
+              Color(0xff1f005c),
+              Color(0xff5b0060),
+              Color(0xff870160),
+              Color(0xffac255e),
+              Color(0xffca485c),
+              Color(0xffe16b5c),
+              Color(0xfff39060),
+              Color(0xffffb56b),
+            ],
+          ),
         ),
         child: const MyHomePage(title: 'New',
         ),
@@ -53,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     );
   }
 
-  String _loginButtonText = "Login";
+  String _loginButtonText = "Profile";
   String _registrationbuttonText = "Registration";
   int _counter = 0;
 
@@ -109,11 +120,13 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             const SizedBox(height: 30,),
 
             const ListTile(
-              title: Text('+91 7800324977'),
+              contentPadding: EdgeInsets.fromLTRB(70, 0, 0, 0) ,
+              title: Text('+91 7803254456'),
               leading: Icon(Icons.phone),
             ),
 
             const ListTile(
+              contentPadding: EdgeInsets.fromLTRB(50, 0, 0, 0) ,
               title: Text('tanishaarora@gmail.com'),
               leading: Icon(Icons.mail),
             ),
@@ -126,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 style: TextStyle(fontSize: 15),
               ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile()));
               },
               style: TextButton.styleFrom(
                   primary: Colors.white,
@@ -159,7 +172,26 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           animationController.reverse();
         } else {
           animationController.forward();
-        }}
+        }},
+          child: Container(width: 60, height: 60,
+          child: Icon(Icons.add),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment(0.8, 1),
+                colors:<Color>[
+                Color(0xff1f005c),
+                Color(0xff5b0060),
+                Color(0xff870160),
+                Color(0xffac255e),
+                Color(0xffca485c),
+                Color(0xffe16b5c),
+                Color(0xfff39060),
+                Color(0xffffb56b),
+              ],)
+          )
+      )
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
