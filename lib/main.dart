@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Login.dart';
 import 'Registration.dart';
@@ -192,7 +193,37 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               ],)
           )
       )
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+
+
+      drawer: Drawer(
+        child: ListView(
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color:  Color(0xffac255e),
+              ),
+              child: Text(
+                'Performs',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('To Do List'),
+              leading
+                  : Icon(Icons.edit),
+            ),
+            ListTile(
+              title: Text('BMI calculator'),
+              leading
+                  : Icon(Icons.calculate),),
+          ],
+        ),
+      ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
