@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/Login.dart';
+import 'package:flutter_demo/to_do_list/splash_screen.dart';
 import 'Registration.dart';
-import 'package:circular_reveal_animation/src/circular_reveal_animation.dart';
 
 void main() => runApp(const MyApp());
 
@@ -194,28 +194,43 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           )
       )
       ),
-
-
       drawer: Drawer(
         child: ListView(
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color:  Color(0xffac255e),
-              ),
-              child: Text(
-                'Performs',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
+          children: [
+            Container(
+                height: 65.0,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient( begin: Alignment.topLeft,
+                      end: Alignment(0.8, 1),
+                      colors: <Color>[
+                        Color(0xff1f005c),
+                        Color(0xff5b0060),
+                        Color(0xff870160),
+                        Color(0xffac255e),
+                        Color(0xffca485c),
+                        Color(0xffe16b5c),
+                        Color(0xfff39060),
+                        Color(0xffffb56b),
+                      ],),
+                  ), child: Text(
+                  'Performs',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),//add futher code here
+            ),
             ),
             ListTile(
               title: Text('To Do List'),
-              leading
-                  : Icon(Icons.edit),
+              leading: Icon(Icons.edit),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Splash(),
+                  ),
+                );
+              },
             ),
             ListTile(
               title: Text('BMI calculator'),
@@ -223,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                   : Icon(Icons.calculate),),
           ],
         ),
-      ),// This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
