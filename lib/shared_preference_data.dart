@@ -1,3 +1,4 @@
+/*
 import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models.dart';
@@ -28,7 +29,7 @@ class Shared_preference_data{
     final radiobutton = Gender.values[preference.getInt('radiobutton') ?? 0];
     final checkbox = preference.getStringList('checkbox');
 
-    final marvelCharacter = checkbox!.map((stringIndex) => MarvelCharacter.values[int.parse(stringIndex)]).toSet();
+    final marvelCharacter = checkbox.map((stringIndex) => MarvelCharacter.values[int.parse(stringIndex)]).toSet();
 
     final dropdown = preference.getString('dropdown');
     final switch_list = preference.getBool('switch_list');
@@ -44,3 +45,4 @@ class Shared_preference_data{
         switch_list: switch_list ?? false);
   }
 }
+*/

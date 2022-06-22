@@ -45,11 +45,11 @@ List dataList = [
 ];
 
 class Menu {
-  String? name;
-  IconData? icon;
+  String name;
+  IconData icon;
   List<Menu> subMenu = [];
 
-  Menu({required this.name, required this.subMenu, required this.icon});
+  Menu({ this.name,  this.subMenu, this.icon});
 
   Menu.fromJson(Map<String, dynamic> json) {
     name = json['name'];

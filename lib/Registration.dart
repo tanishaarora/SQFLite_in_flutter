@@ -3,7 +3,7 @@ import 'package:flutter_demo/models.dart';
 import 'package:flutter_demo/shared_preference_data.dart';
 
 class Registration extends StatelessWidget {
-  const Registration({Key? key}) : super(key: key);
+  const Registration({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class Registration extends StatelessWidget {
 }
 
 class MyRegistrationPage extends StatefulWidget {
-  const MyRegistrationPage({Key? key, required this.title}) : super(key: key);
+  const MyRegistrationPage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
@@ -42,7 +42,7 @@ class MyRegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<MyRegistrationPage> {
 
-  final shared_preference_data = Shared_preference_data();
+ // final shared_preference_data = Shared_preference_data();
   final name = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var _character = Gender.FEMALE;
@@ -54,7 +54,7 @@ class _RegistrationPageState extends State<MyRegistrationPage> {
   @override
   void initState() {
     super.initState();
-    _populateFields();
+    // _populateFields();
   }
 
   String dropdownvalue = 'Item 1';
@@ -65,7 +65,7 @@ class _RegistrationPageState extends State<MyRegistrationPage> {
   final password = TextEditingController();
   get dropdown => null;
 
-  void _populateFields() async{
+ /* void _populateFields() async{
     final settings = await shared_preference_data.getSettings();
     setState(() {
       name.text = settings.name;
@@ -74,7 +74,7 @@ class _RegistrationPageState extends State<MyRegistrationPage> {
       _character = settings.character;
       _selectedCharacter = settings.selectedCharacter;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -279,9 +279,9 @@ class _RegistrationPageState extends State<MyRegistrationPage> {
                         ).toList(),
                         // After selecting the desired option,it will
                         // change button value to selected value
-                        onChanged: (String? newValue) {
+                        onChanged: (String newValue) {
                           setState(() {
-                            dropdownvalue = newValue!;
+                            dropdownvalue = newValue;
                           });
                         },
                       ),
@@ -294,7 +294,7 @@ class _RegistrationPageState extends State<MyRegistrationPage> {
 
                       ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState.validate()) {
                             /*ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text(
                                   'Successful')),
@@ -385,7 +385,7 @@ class _RegistrationPageState extends State<MyRegistrationPage> {
           switch_list: _isEmployed);
 
       print(newSettings);
-      shared_preference_data.saveSettings(newSettings);
+      // shared_preference_data.saveSettings(newSettings);
   }
 }
 

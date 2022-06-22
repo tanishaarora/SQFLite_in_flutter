@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -29,7 +29,10 @@ environment:
 dependencies:
   flutter_form_builder: ^3.8.2
   grouped_buttons: ^1.0.4
-  shared_preferences: ^2.0.8
+  sqflite: ^1.1.7
+  path_provider: ^1.6.5
+  toast: ^0.1.5
+# shared_preferences: ^2.0.8
   circular_reveal_animation: ^1.1.5
   flutter:
     sdk: flutter

@@ -13,8 +13,8 @@ class Settings {
   final bool switch_list;
 
   Settings(
-      {required this.name, required this.phone_number, required this.email,
-        required this.password, required this.character, required this.dropdown,
-        required this.selectedCharacter, required this.switch_list});
+      {this.name, this.phone_number,  this.email,
+        this.password,  this.character, this.dropdown,
+       this.selectedCharacter, this.switch_list});
 }
 
