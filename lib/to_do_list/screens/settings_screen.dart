@@ -1,11 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/to_do_list/screens/home_screen.dart';
+import 'package:animated_check/animated_check.dart';
+import 'package:toast/toast.dart';
 
-class Settings extends StatefulWidget{
+import '../helper/database_helper.dart';
+
+class Settings extends StatefulWidget {
   @override
-  _SettingsState createState() =>  _SettingsState();
+  _SettingsState createState() => _SettingsState();
 }
-class _SettingsState extends State<Settings> {
+
+  showAlertDialog(BuildContext context) async {
+    // set up the buttons
+    // ignore: deprecated_member_use
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    // ignore: deprecated_member_use
+    Widget continueButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        DatabaseHelper.instance.deleteAllTask();
+        Toast.show("All data cleared", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => HomeScreen()));
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Would you like to clear all data? It cannot be undone."),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+class _SettingsState extends State<Settings> with SingleTickerProviderStateMixin {
+
+  AnimationController _animationController;
+  Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+
+    _animation = new Tween<double>(begin: 0, end: 1).animate(
+        new CurvedAnimation(
+            parent: _animationController, curve: Curves.easeInOutCirc));
+  }
   @override
 
   Widget build(BuildContext context) {
@@ -33,7 +95,9 @@ class _SettingsState extends State<Settings> {
                         height: 65,
                         width: 65,
                         color: Color(0xffac255e),
-                        child: Icon(Icons.check_rounded, size: 35,color: Colors.white,),),),
+                        child:AnimatedCheck(progress: _animation, size: 35,color: Colors.white),
+                        //Icon(Icons.check_rounded, size: 35,color: Colors.white,),
+                          ),),
 
                     SizedBox(height: 20,),
 
@@ -73,21 +137,24 @@ class _SettingsState extends State<Settings> {
                               padding: const EdgeInsets.only(
                                   top: 30.0, left: 40.0, right: 20.0, bottom: 30.0),
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  showAlertDialog(context);
+                                },
                                 child: new Container(
                                     alignment: Alignment.center,
                                     height: 40.0,
                                     decoration: new BoxDecoration(
                                         color: Colors.grey,
                                         borderRadius: new BorderRadius.circular(9.0)),
-                                    child: new Text("CLEAR ALL DATA",
+                                    child: new TextButton(child: Text("CLEAR ALL DATA",
                                         style: new TextStyle(
-                                            fontSize: 15.0, color: Colors.white))),
+                                            fontSize: 15.0, color: Colors.white),),
+                                    onPressed: _animationController.forward),
+                                ),
                               ),
                             ),
                           ),
                         ]),
-
                     SizedBox(
                       width: 1080,
                       height: 1,
@@ -115,8 +182,6 @@ class _SettingsState extends State<Settings> {
                             color: Colors.brown,
                             fontSize: 20,
                           ),),),),),
-
-
                     SizedBox(height: 1,
                       width: 1000,
                     child: const DecoratedBox(

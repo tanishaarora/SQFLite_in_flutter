@@ -1,7 +1,10 @@
 import  'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/Login.dart';
+import 'package:flutter_demo/get_api_response/get_api_response.dart';
+import 'package:flutter_demo/launch_screen_subjects/Login.dart';
+import 'package:flutter_demo/photo_app_using_firebase/photo_main.dart';
 import 'package:flutter_demo/to_do_list/screens/splash_screen.dart';
+import '../gif_finder/gif_home_page.dart';
 import 'Registration.dart';
 
 void main() => runApp(const MyApp());
@@ -235,7 +238,26 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             ListTile(
               title: Text('BMI calculator'),
               leading
-                  : Icon(Icons.calculate),),
+                  : Icon(Icons.calculate),
+          //  onTap: () {
+              //    Navigator.push(context, MaterialPageRoute(builder: (context) => NewHomePage(),),);},)
+            ),
+            ListTile(
+              title: Text('Photos'),
+              leading: Icon(Icons.photo_library),
+             /* onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPhotoApp(),
+                ),
+                );
+              },*/
+            ),
+            ListTile(
+              title: Text('API'),
+              leading: Icon(Icons.apps_outlined),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GIF_HomePage()));
+              }
+            ),
           ],
         ),
       ),

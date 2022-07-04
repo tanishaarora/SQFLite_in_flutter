@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/models.dart';
-import 'package:flutter_demo/shared_preference_data.dart';
+import 'package:flutter_demo/shared_preference/models.dart';
+import 'package:flutter_demo/shared_preference/shared_preference_data.dart';
 
 class Registration extends StatelessWidget {
   const Registration({Key key}) : super(key: key);

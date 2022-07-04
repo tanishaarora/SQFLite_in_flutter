@@ -6,6 +6,7 @@ import 'package:toast/toast.dart';
 import '../helper/database_helper.dart';
 import 'package:intl/intl.dart';
 
+import 'history_screen.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget{
@@ -52,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               subtitle: Text(
-              task.dateTime,
-                /*'${_dateFormatter.format(task.dateTime)} • ${task.priority}',*/
+           //   task.dateTime,
+                '${task.dateTime} • ${task.priority}',
                 style: TextStyle(
                   fontSize: 15.0,
                   decoration: task.status == 0
@@ -131,12 +132,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         actions: <Widget>[
-          IconButton(onPressed: (){},
+          IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => History())),
             icon: Icon(Icons.history_outlined),
             color: Colors.black,
             tooltip: 'View History',),
 
-          IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Settings())),
+          IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => Settings(), )),
               icon: Icon(Icons.settings_outlined,),
             color: Colors.black,
           tooltip: 'Settings',)

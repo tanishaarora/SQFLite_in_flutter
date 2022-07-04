@@ -37,7 +37,7 @@ class DatabaseHelper{
   Future<List<Map<String, dynamic>>> getTaskMapList() async {
     Database db = await this.db;
     final List<Map<String, dynamic>> result = await db.query(tasksTable);
-    print("Latest size is ${result.length}");
+ //   print("Latest size is ${result.length}");
     return result;
   }
 
@@ -46,13 +46,13 @@ class DatabaseHelper{
     print("Length is ${taskMapList.length}    ${taskMapList.toString()}");
     final List<Task> taskList = [];
     taskMapList.forEach((taskMap) {
-      print('Single task ====${Task.fromMap(taskMap)}');
+  //    print('Single task ====${Task.fromMap(taskMap)}');
       taskList.add(Task.fromMap(taskMap));
-      print('Task === $taskMap');
+  //    print('Task === $taskMap');
 
     });
-    //taskList.sort((taskA, taskB) => taskA.dateTime.compareTo(taskB.dateTime));
-    print("Length issssssssss ${taskList.length}");
+    taskList.sort((taskA, taskB) => taskA.dateTime.compareTo(taskB.dateTime));
+  //  print("Length issssssssss ${taskList.length}");
     return taskList;
   }
 
@@ -73,4 +73,19 @@ class DatabaseHelper{
     return result;
   }
 
+  Future<int> deleteTask(int id) async {
+    Database db = await this.db;
+    final int result = await db.delete(
+        tasksTable,
+        where: '$colId = ?',
+        whereArgs: [id],
+    );
+    return result;
+  }
+
+  Future<int> deleteAllTask() async {
+    Database db = await this.db;
+    final int result = await db.delete(tasksTable);
+    return result;
+  }
 }

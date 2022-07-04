@@ -15,7 +15,7 @@ class AddTaskScreen extends StatefulWidget{
   _AddTaskScreen createState() => _AddTaskScreen();
 }
 
-class _AddTaskScreen extends State<AddTaskScreen>{
+class _AddTaskScreen extends State<AddTaskScreen> {
 
   final _formKey = GlobalKey<FormState>();
   String _title = '';
@@ -30,7 +30,7 @@ class _AddTaskScreen extends State<AddTaskScreen>{
   void initState() {
     super.initState();
 
-    if (widget.task != null) {    // update the tasks
+    if (widget.task != null) { // update the tasks
       _title = widget.task.title;
       _dateController.text = widget.task.dateTime;
       _priority = widget.task.priority;
@@ -61,16 +61,27 @@ class _AddTaskScreen extends State<AddTaskScreen>{
     }
   }
 
-  _submit(){
-    if(_formKey.currentState.validate()){
+  _delete() {
+    DatabaseHelper.instance.deleteTask(widget.task.id);
+    Navigator.pop(context);
+    widget.updateTaskList();
+    Toast.show("Task deleted", context, duration: Toast.LENGTH_LONG,
+        gravity: Toast.BOTTOM);
+  }
+
+  _submit() {
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       print('$_title, $_date, $_priority');
 
-      Task task = Task(title: _title, dateTime: _dateFormatter.format(_date), priority: _priority);
-      if(widget.task == null){
+      Task task = Task(title: _title,
+          dateTime: _dateFormatter.format(_date),
+          priority: _priority);
+      if (widget.task == null) {
         task.status = 0;
         DatabaseHelper.instance.insertTask(task);
-        Toast.show("New Task Added", context, duration : Toast.LENGTH_LONG, gravity : Toast.BOTTOM);
+        Toast.show("New Task Added", context, duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
       }
       else {
         // Update the task
@@ -89,22 +100,23 @@ class _AddTaskScreen extends State<AddTaskScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-        leading:IconButton(
-          icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black),
-          onPressed: () => Navigator.pop(context)),
-      title: Row(
-        children: [ Text(
-        widget.task == null ? 'Add Task' : 'Update Task',
-        style : const TextStyle(
-          color:Color(0xffac255e),
-          fontSize: 20.0,
-          fontWeight: FontWeight.normal,
-        ),),],),
-      centerTitle: false,
-      elevation: 0),
+          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          leading: IconButton(
+              icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black),
+              onPressed: () => Navigator.pop(context)),
+          title: Row(
+            children: [ Text(
+              widget.task == null ? 'Add Task' : 'Update Task',
+              style: const TextStyle(
+                color: Color(0xffac255e),
+                fontSize: 20.0,
+                fontWeight: FontWeight.normal,
+              ),),
+            ],),
+          centerTitle: false,
+          elevation: 0),
 
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -119,14 +131,19 @@ class _AddTaskScreen extends State<AddTaskScreen>{
                   child: Column(
                     children: <Widget>[
                       Padding(padding: EdgeInsets.symmetric(vertical: 20.0),
-                      child: TextFormField(
-                        style: TextStyle(fontSize: 18.0),
-                        decoration: InputDecoration(labelText: 'Title', labelStyle: TextStyle(fontSize: 18.0),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),),
-                        validator: (input) => input.trim().isEmpty ? 'Please enter a task title' : null,
-                        onSaved: (input) => _title = input,
-                        initialValue: _title,
-                      ),),
+                        child: TextFormField(
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(labelText: 'Title',
+                            labelStyle: TextStyle(fontSize: 18.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0)),),
+                          validator: (input) =>
+                          input
+                              .trim()
+                              .isEmpty ? 'Please enter a task title' : null,
+                          onSaved: (input) => _title = input,
+                          initialValue: _title,
+                        ),),
 
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -172,7 +189,8 @@ class _AddTaskScreen extends State<AddTaskScreen>{
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          validator: (input) => _priority == true
+                          validator: (input) =>
+                          _priority == true
                               ? 'Please select a priority level'
                               : null,
                           onChanged: (value) {
@@ -188,14 +206,34 @@ class _AddTaskScreen extends State<AddTaskScreen>{
                         height: 60.0,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                        color: Color(0xffac255e),
-                        borderRadius: BorderRadius.circular(30.0),),
-                          child: FlatButton(
-                    //      style: ElevatedButton.styleFrom(
-                      //    color: Color(0xffac255e)),
-                              child: Text(widget.task == null ? 'Add' : 'Update', style: TextStyle(color: Colors.white)),
-                              onPressed: _submit),
+                          color: Color(0xffac255e),
+                          borderRadius: BorderRadius.circular(30.0),),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(primary: Color(
+                                0xffac255e)),
+                            child: Text(widget.task == null ? 'Add' : 'Update',
+                                style: TextStyle(color: Colors.white)),
+                            onPressed: _submit),
                       ),
+
+                      widget.task != null ? Container(
+                        margin: EdgeInsets.symmetric(vertical: 0.0),
+                        height: 60,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ElevatedButton(style: ElevatedButton.styleFrom(primary: Color(
+                            0xffac255e)),
+                          child: Text('Delete', style: TextStyle(
+                              color: Colors.white),),
+                          onPressed: _delete,
+                        ),
+                      )
+                          : SizedBox.shrink(), // shrinks the box to 0 width,height --> if (widget.task == null)
                     ],
                   ),
                 ),
